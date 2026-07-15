@@ -22,10 +22,12 @@ repositories {
 dependencies {
     implementation(libs.spring.boot.starter)
     implementation(libs.kotlin.reflect)
-
     testImplementation(libs.spring.boot.test)
     testImplementation(libs.kotlin.test.junit5)
     testRuntimeOnly(libs.junit.launcher)
+
+    implementation(libs.spring.boot.starter.webmvc)
+    implementation(libs.springdoc.openapi.starter.webmvc.scalar)
 }
 
 kotlin {

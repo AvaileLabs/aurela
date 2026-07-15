@@ -38,3 +38,8 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
