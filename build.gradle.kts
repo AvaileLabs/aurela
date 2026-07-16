@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.ksp)
 }
 
 group = "com.availelabs"
@@ -28,6 +29,13 @@ dependencies {
 
     implementation(libs.spring.boot.starter.webmvc)
     implementation(libs.springdoc.openapi.starter.webmvc.scalar)
+    implementation(libs.jimmer.spring.boot.starter)
+    implementation(platform(libs.spring.modulith.bom))
+    implementation(libs.spring.modulith.starter.core)
+    testImplementation(libs.spring.modulith.starter.test)
+    ksp(libs.jimmer.ksp)
+    runtimeOnly(libs.postgresql)
+    runtimeOnly(libs.spring.boot.docker.compose)
 }
 
 kotlin {

@@ -3,6 +3,9 @@ kotlin = "2.4.10"
 spring-boot = "4.1.0"
 spring-dependency-management = "1.1.7"
 springdoc-openapi = "3.0.3"
+ksp = "2.3.10"
+jimmer = "0.11.0"
+spring-modulith = "2.1.0"
 
 [libraries]
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
@@ -13,9 +16,17 @@ junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 spring-boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
 springdoc-openapi-starter-webmvc-scalar = { module = "org.springdoc:springdoc-openapi-starter-webmvc-scalar", version.ref = "springdoc-openapi" }
+jimmer-spring-boot-starter = { module = "org.babyfish.jimmer:jimmer-spring-boot-starter", version.ref = "jimmer" }
+jimmer-ksp = { module = "org.babyfish.jimmer:jimmer-ksp", version.ref = "jimmer" }
+spring-modulith-bom = { module = "org.springframework.modulith:spring-modulith-bom", version.ref = "spring-modulith" }
+spring-modulith-starter-core = { module = "org.springframework.modulith:spring-modulith-starter-core" }
+spring-modulith-starter-test = { module = "org.springframework.modulith:spring-modulith-starter-test" }
+postgresql = { module = "org.postgresql:postgresql" }
+spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

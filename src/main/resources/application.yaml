@@ -1,3 +1,6 @@
 spring:
   application:
     name: aurela
+
+jimmer:
+  language: kotlin
