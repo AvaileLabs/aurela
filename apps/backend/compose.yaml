@@ -1,0 +1,13 @@
+name: aurela-backend
+
+services:
+  postgres:
+    image: postgres:19beta2
+    environment:
+      POSTGRES_DB: aurela
+      POSTGRES_USER: aurela
+      POSTGRES_PASSWORD: aurela
+    ports:
+      - "5432"
+    tmpfs:
+      - /var/lib/postgresql

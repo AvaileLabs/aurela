@@ -1,6 +1,9 @@
 spring:
   application:
     name: aurela
+  docker:
+    compose:
+      file: apps/backend/compose.yaml
 
 jimmer:
   language: kotlin
