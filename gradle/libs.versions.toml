@@ -13,7 +13,6 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
 junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
-
 spring-boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
 springdoc-openapi-starter-webmvc-scalar = { module = "org.springdoc:springdoc-openapi-starter-webmvc-scalar", version.ref = "springdoc-openapi" }
 jimmer-spring-boot-starter = { module = "org.babyfish.jimmer:jimmer-spring-boot-starter", version.ref = "jimmer" }
@@ -23,6 +22,9 @@ spring-modulith-starter-core = { module = "org.springframework.modulith:spring-m
 spring-modulith-starter-test = { module = "org.springframework.modulith:spring-modulith-starter-test" }
 postgresql = { module = "org.postgresql:postgresql" }
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
+testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
+spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

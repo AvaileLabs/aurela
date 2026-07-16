@@ -25,8 +25,10 @@ dependencies {
     implementation(libs.kotlin.reflect)
     testImplementation(libs.spring.boot.test)
     testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.testcontainers.junit.jupiter)
+    testImplementation(libs.spring.boot.testcontainers)
+    testImplementation(libs.testcontainers.postgresql)
     testRuntimeOnly(libs.junit.launcher)
-
     implementation(libs.spring.boot.starter.webmvc)
     implementation(libs.springdoc.openapi.starter.webmvc.scalar)
     implementation(libs.jimmer.spring.boot.starter)
