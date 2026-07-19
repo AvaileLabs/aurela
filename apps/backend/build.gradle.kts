@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.boot)
-    alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dataframe)
 }
 
 group = "com.availelabs"
@@ -21,23 +21,26 @@ repositories {
 }
 
 dependencies {
+    implementation(platform(libs.spring.boot.bom))
+    implementation(platform(libs.spring.modulith.bom))
+
     implementation(libs.spring.boot.starter)
     implementation(libs.kotlin.reflect)
-    testImplementation(libs.spring.boot.test)
+    testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.spring.boot.testcontainers)
     testImplementation(libs.testcontainers.postgresql)
-    testRuntimeOnly(libs.junit.launcher)
+    testRuntimeOnly(libs.junit.platform.launcher)
     implementation(libs.spring.boot.starter.webmvc)
     implementation(libs.springdoc.openapi.starter.webmvc.scalar)
     implementation(libs.jimmer.spring.boot.starter)
-    implementation(platform(libs.spring.modulith.bom))
     implementation(libs.spring.modulith.starter.core)
     testImplementation(libs.spring.modulith.starter.test)
     ksp(libs.jimmer.ksp)
     runtimeOnly(libs.postgresql)
     runtimeOnly(libs.spring.boot.docker.compose)
+    implementation(libs.dataframe)
 }
 
 kotlin {
