@@ -9,7 +9,20 @@ spring:
   docker:
     compose:
       file: apps/backend/compose.yaml
+  boot:
+    admin:
+      client:
+        url: ${SPRING_BOOT_ADMIN_URL:http://localhost:9090}
+        username: ${SPRING_BOOT_ADMIN_USERNAME:admin}
+        password: ${SPRING_BOOT_ADMIN_PASSWORD:admin}
+        instance:
+          metadata:
+            user.name: ${MANAGEMENT_USERNAME:actuator}
+            user.password: ${MANAGEMENT_PASSWORD:actuator}
   security:
+    user:
+      name: ${MANAGEMENT_USERNAME:actuator}
+      password: ${MANAGEMENT_PASSWORD:actuator}
     oauth2:
       client:
         registration:
@@ -19,6 +32,15 @@ spring:
             scope:
               - read:user
               - user:email
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 jimmer:
   language: kotlin

@@ -6,10 +6,12 @@ ksp = "2.3.10"
 jimmer = "0.11.0"
 spring-modulith = "2.1.0"
 dataframe = "1.0.0-Beta5"
+spring-boot-admin = "4.1.2"
 
 [libraries]
 spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 spring-modulith-bom = { module = "org.springframework.modulith:spring-modulith-bom", version.ref = "spring-modulith" }
+spring-boot-admin-bom = { module = "de.codecentric:spring-boot-admin-dependencies", version.ref = "spring-boot-admin" }
 
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
@@ -31,6 +33,12 @@ dataframe = { module = "org.jetbrains.kotlinx:dataframe", version.ref = "datafra
 spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
 spring-boot-starter-security-oauth2-client = { module = "org.springframework.boot:spring-boot-starter-security-oauth2-client" }
 spring-security-test = { module = "org.springframework.security:spring-security-test" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test" }
+spring-boot-admin-starter-server = { module = "de.codecentric:spring-boot-admin-starter-server" }
+spring-boot-admin-starter-client = { module = "de.codecentric:spring-boot-admin-starter-client" }
+spring-modulith-actuator = { module = "org.springframework.modulith:spring-modulith-actuator" }
+spring-modulith-observability = { module = "org.springframework.modulith:spring-modulith-observability" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

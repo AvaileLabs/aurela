@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: aurela-monitoring
+  security:
+    user:
+      name: ${SPRING_BOOT_ADMIN_USERNAME:admin}
+      password: ${SPRING_BOOT_ADMIN_PASSWORD:admin}
+
+server:
+  port: ${SPRING_BOOT_ADMIN_PORT:9090}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+  endpoint:
+    health:
+      show-details: when-authorized
