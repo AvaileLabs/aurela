@@ -47,6 +47,7 @@ dependencies {
     runtimeOnly(libs.postgresql)
     runtimeOnly(libs.spring.boot.docker.compose)
     implementation(libs.dataframe)
+    implementation(libs.spring.boot.starter.restclient)
 }
 
 kotlin {

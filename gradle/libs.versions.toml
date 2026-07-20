@@ -34,6 +34,7 @@ spring-security-test = { module = "org.springframework.security:spring-security-
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
 spring-modulith-actuator = { module = "org.springframework.modulith:spring-modulith-actuator" }
 spring-modulith-observability = { module = "org.springframework.modulith:spring-modulith-observability" }
+spring-boot-starter-restclient = { module = "org.springframework.boot:spring-boot-starter-restclient" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

@@ -12,5 +12,4 @@ class EiaBulkDataController {
     fun getBulkData(@PathVariable dataSetId: String) {
 
     }
-
 }
