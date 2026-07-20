@@ -6,8 +6,25 @@ import tools.jackson.databind.node.ObjectNode
 import java.nio.file.Path
 import kotlin.io.path.useLines
 
+/**
+ * Streams newline-delimited EIA petroleum JSON records from disk.
+ *
+ * Records are classified by their identifying field without loading the complete file into
+ * memory. Blank lines are ignored.
+ *
+ * @property jsonMapper mapper used to parse each JSON object
+ */
 @Component
 class EiaPetroleumBulkReader(private val jsonMapper: JsonMapper) {
+    /**
+     * Parses each record in [path] and passes it to [action] in file order.
+     *
+     * Parsing, file-access, and callback exceptions are propagated to the caller.
+     *
+     * @param path newline-delimited JSON file to read
+     * @param action callback invoked once for every non-blank record
+     * @throws IllegalArgumentException if a non-blank line does not contain a JSON object
+     */
     fun forEachRecord(
         path: Path,
         action: (EiaPetroleumRecord) -> Unit

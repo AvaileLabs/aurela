@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dataframe)
+    alias(libs.plugins.dokka)
 }
 
 group = "com.availelabs"
@@ -49,6 +50,21 @@ dependencies {
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+    }
+}
+
+dokka {
+    dokkaPublications.html {
+        moduleName.set("Aurela Backend")
+        moduleVersion.set(project.version.toString())
+        outputDirectory.set(layout.buildDirectory.dir("dokka/html"))
+        includes.from("src/main/dokka/Module.md")
+        failOnWarning.set(true)
+        suppressInheritedMembers.set(true)
+    }
+
+    dokkaSourceSets.main {
+        reportUndocumented.set(true)
     }
 }
 

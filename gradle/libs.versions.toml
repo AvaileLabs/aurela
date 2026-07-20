@@ -6,6 +6,7 @@ ksp = "2.3.10"
 jimmer = "0.11.0"
 spring-modulith = "2.1.0"
 dataframe = "1.0.0-Beta5"
+dokka = "2.2.0"
 
 [libraries]
 spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
@@ -38,3 +39,4 @@ kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotl
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 dataframe = { id = "org.jetbrains.kotlin.plugin.dataframe", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
