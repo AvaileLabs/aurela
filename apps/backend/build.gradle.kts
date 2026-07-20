@@ -29,6 +29,8 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.security.oauth2.client)
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("de.codecentric:spring-boot-admin-starter-server:4.1.2")
+    implementation("de.codecentric:spring-boot-admin-starter-client:4.1.2")
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.testcontainers.junit.jupiter)
