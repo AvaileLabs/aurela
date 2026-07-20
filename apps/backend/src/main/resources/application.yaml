@@ -1,9 +1,24 @@
 spring:
   application:
     name: aurela
+  threads:
+    virtual:
+      enabled: true
+  main:
+    keep-alive: true
   docker:
     compose:
       file: apps/backend/compose.yaml
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope:
+              - read:user
+              - user:email
 
 jimmer:
   language: kotlin

@@ -28,6 +28,9 @@ testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-jun
 spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
 testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
 dataframe = { module = "org.jetbrains.kotlinx:dataframe", version.ref = "dataframe" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-boot-starter-security-oauth2-client = { module = "org.springframework.boot:spring-boot-starter-security-oauth2-client" }
+spring-security-test = { module = "org.springframework.security:spring-security-test" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
