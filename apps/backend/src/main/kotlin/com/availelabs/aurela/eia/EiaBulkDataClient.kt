@@ -13,7 +13,8 @@ class EiaBulkDataClient(
         .build()
 
     fun downloadDatasetOrNull(datasetId: String): ByteArray? {
-        val request = restClient.get().uri("/$datasetId.zip")
+        val request = restClient.get()
+            .uri("/{datasetId}.zip", datasetId)
         val downloadedFile = request.exchange { _, response ->
             val status = response.statusCode
 
