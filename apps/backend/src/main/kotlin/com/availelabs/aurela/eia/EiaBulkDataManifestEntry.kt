@@ -16,6 +16,10 @@ value class EiaDatasetId(val value: String) {
     }
 
     private companion object {
+        /*
+        Matches a sequence that starts with an ASCII uppercase letter,
+        followed by zero or more ASCII uppercase letters, digits, or underscores.
+         */
         val PATTERN = Regex("[A-Z][A-Z0-9_]*")
     }
 }
