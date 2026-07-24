@@ -3,9 +3,9 @@ kotlin = "2.4.10"
 spring-boot = "4.1.0"
 springdoc-openapi = "3.0.3"
 ksp = "2.3.10"
-jimmer = "0.11.0"
+jimmer = "0.11.4"
 spring-modulith = "2.1.0"
-dataframe = "1.0.0-Beta5"
+dataframe = "1.0.0-rc01"
 
 [libraries]
 spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
