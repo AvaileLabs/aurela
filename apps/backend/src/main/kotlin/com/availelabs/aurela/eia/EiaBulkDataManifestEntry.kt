@@ -17,9 +17,17 @@ value class EiaDatasetId(val value: String) {
 
     private companion object {
         /*
-        Matches a sequence that starts with an ASCII uppercase letter,
-        followed by zero or more ASCII uppercase letters, digits, or underscores.
+        EIA identifiers include values such as:
+
+        PET
+        PET_IMPORTS
+        AEO.2014
+        IEO.2023
+
+        Dots separate non-empty identifier segments. Slashes, backslashes,
+        whitespace, and empty dot-separated segments are deliberately rejected.
          */
-        val PATTERN = Regex("[A-Z][A-Z0-9_]*")
+        val PATTERN =
+            Regex("[A-Z][A-Z0-9_]*(?:\\.[A-Z0-9_]+)*")
     }
 }
