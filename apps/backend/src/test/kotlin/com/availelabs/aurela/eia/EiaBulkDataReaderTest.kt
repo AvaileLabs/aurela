@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import tools.jackson.databind.json.JsonMapper
+import java.nio.file.Files
 import java.nio.file.Path
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 class EiaPetroleumBulkReaderTest {
     private val jsonMapper = JsonMapper.builder().build()
@@ -16,7 +19,7 @@ class EiaPetroleumBulkReaderTest {
 
     @Test
     fun `classifies petroleum record types`() {
-        val inputFile = tempDirectory.resolve("test.txt")
+        val archivePath = tempDirectory.resolve("PET.zip")
 
         val records = listOf(
             jsonMapper.createObjectNode()
@@ -28,32 +31,41 @@ class EiaPetroleumBulkReaderTest {
                 .put("name", "Test category"),
 
             jsonMapper.createObjectNode()
-                .put("name", "Unknown record")
+                .put("name", "Unknown record"),
         )
 
-        jsonMapper.writer()
-            .withRootValueSeparator("\n")
-            .writeValues(inputFile)
-            .use { writer ->
-                writer.writeAll(records)
+        ZipOutputStream(
+            Files.newOutputStream(archivePath),
+        ).use { zipOutput ->
+            zipOutput.putNextEntry(ZipEntry("PET.txt"))
+
+            jsonMapper.writer()
+                .withRootValueSeparator("\n")
+                .writeValues(zipOutput)
+                .use { writer ->
+                    writer.writeAll(records)
+                }
             }
 
         val actualRecords = mutableListOf<EiaPetroleumRecord>()
 
-        reader.forEachRecord(inputFile, actualRecords::add)
+        reader.forEachRecord(
+            archivePath,
+            actualRecords::add,
+        )
 
         assertEquals(3, actualRecords.size)
         assertInstanceOf(
             EiaPetroleumRecord.Series::class.java,
-            actualRecords[0]
+            actualRecords[0],
         )
         assertInstanceOf(
             EiaPetroleumRecord.Category::class.java,
-            actualRecords[1]
+            actualRecords[1],
         )
         assertInstanceOf(
             EiaPetroleumRecord.Unrecognized::class.java,
-            actualRecords[2]
+            actualRecords[2],
         )
     }
 }

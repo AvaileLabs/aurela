@@ -1,28 +1,46 @@
 package com.availelabs.aurela.eia
 
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Timeout
-import org.junit.jupiter.api.assertNotNull
+import org.junit.jupiter.api.io.TempDir
 import org.springframework.web.client.RestClient
+import tools.jackson.databind.json.JsonMapper
+import java.nio.file.Path
 import java.util.concurrent.TimeUnit
 import kotlin.test.Test
+import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
+@Tag("live")
 class EiaBulkDataClientLiveTest {
-    private val client = EiaBulkDataClient(RestClient.builder())
+    private val client = EiaBulkDataClient(
+        RestClient.builder(),
+        JsonMapper.builder().build(),
+    )
+
+    @TempDir
+    lateinit var tempDirectory: Path
 
     @Test
     @Timeout(value = 1, unit = TimeUnit.MINUTES)
-    fun `downloads a valid zip file from EIA`() {
-        val downloadedFile = client.downloadDatasetOrNull("TOTAL")
-        assertNotNull(downloadedFile)
-        assertTrue(downloadedFile.isNotEmpty())
-    }
+    fun `downloads a manifest archive from EIA`() {
+        val manifestEntry = assertNotNull(
+            client.downloadManifest()[
+                EiaDatasetId("TOTAL")
+            ],
+        )
 
-    @Test
-    @Timeout(value = 1, unit = TimeUnit.MINUTES)
-    fun `downloads a non-existent database from EIA returns null`() {
-        val downloadedFile = client.downloadDatasetOrNull("DOES_NOT_EXIST")
-        assertNull(downloadedFile)
+        val destination =
+            tempDirectory.resolve("TOTAL.zip.part")
+
+        val result = assertIs<EiaBulkDataDownloadResult.Downloaded>(
+            client.downloadDataset(
+                manifestEntry,
+                destination,
+            ),
+        )
+
+        assertTrue(result.sizeBytes > 0)
     }
 }

@@ -1,36 +1,79 @@
 package com.availelabs.aurela.eia
 
 import org.springframework.stereotype.Service
-import java.nio.file.Files
-import java.nio.file.Path
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 @Service
-class EiaBulkDataService(private val bulkDataClient: EiaBulkDataClient) {
-    private val bulkDataDirectory: Path =
-        Path.of(
-            System.getProperty("user.home"),
-            "Aurela",
-            "workspace",
-            "eia",
-            "bulk-data",
-        ).toAbsolutePath().normalize()
+class EiaBulkDataService(
+    private val bulkDataClient: EiaBulkDataClient,
+    private val bulkDataStore: EiaBulkDataStore,
+    private val bulkArchive: EiaBulkArchive,
+) {
+    private val synchronizationLocks =
+        ConcurrentHashMap<EiaDatasetId, ReentrantLock>()
 
-    init {
-        Files.createDirectories(bulkDataDirectory)
+    fun synchronizeBulkData(
+        datasetId: EiaDatasetId,
+    ): EiaBulkDataSynchronizationOutcome {
+        val synchronizationLock =
+            synchronizationLocks.computeIfAbsent(datasetId) {
+                ReentrantLock()
+            }
+
+        return synchronizationLock.withLock {
+            synchronizeLocked(datasetId)
+        }
     }
 
-    fun upsertBulkData(dataSetId: String): BulkDataUpsertOutcome {
-        val downloadedFile = bulkDataClient.downloadDatasetOrNull(dataSetId)
-            ?: return BulkDataUpsertOutcome.NOT_FOUND
+    private fun synchronizeLocked(
+        datasetId: EiaDatasetId,
+    ): EiaBulkDataSynchronizationOutcome {
+        val manifestEntry =
+            bulkDataClient.downloadManifest()[datasetId]
+                ?: return EiaBulkDataSynchronizationOutcome.NOT_FOUND
 
-        val destination = bulkDataDirectory.resolve("$dataSetId.zip")
-        Files.write(destination, downloadedFile)
+        if (bulkDataStore.isCurrent(manifestEntry)) {
+            return EiaBulkDataSynchronizationOutcome.UNCHANGED
+        }
 
-        return BulkDataUpsertOutcome.UPSERTED
+        val temporaryArchive =
+            bulkDataStore.createTemporaryArchive(datasetId)
+
+        try {
+            return when (
+                val download = bulkDataClient.downloadDataset(
+                    manifestEntry,
+                    temporaryArchive,
+                )
+            ) {
+                EiaBulkDataDownloadResult.NotFound ->
+                    EiaBulkDataSynchronizationOutcome.NOT_FOUND
+
+                is EiaBulkDataDownloadResult.Downloaded -> {
+                    bulkArchive.validate(
+                        temporaryArchive,
+                        manifestEntry.accessUrl,
+                    )
+
+                    bulkDataStore.install(
+                        manifestEntry,
+                        temporaryArchive,
+                        download,
+                    )
+
+                    EiaBulkDataSynchronizationOutcome.DOWNLOADED
+                }
+            }
+        } finally {
+            bulkDataStore.deleteTemporaryArchive(temporaryArchive)
+        }
     }
 }
 
-enum class BulkDataUpsertOutcome {
-    UPSERTED,
-    NOT_FOUND
+enum class EiaBulkDataSynchronizationOutcome {
+    DOWNLOADED,
+    UNCHANGED,
+    NOT_FOUND,
 }
